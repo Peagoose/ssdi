@@ -31,7 +31,7 @@ whitespace/punctuation span trimming.
 - **Success check:** a mixed line ("SSN 123-45-6789 for John Smith") yields SSN from
   the regex recognizer (not NER) and PERSON for the name, spans trimmed exactly.
 
-## [ ] Task 5 — Anonymization + key (`src/anonymize.py`)
+## [x] Task 5 — Anonymization + key (`src/anonymize.py`)
 Typed reversible placeholders `[NAME_1]`; same surface value → same placeholder;
 numbers assigned in reading order; CSV re-identification key.
 - **Success check:** repeated value gets one placeholder; key round-trips to original.
