@@ -8,18 +8,18 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ---
 
-## [~] Task 1 — Project scaffold + smoke test
+## [x] Task 1 — Project scaffold + smoke test
 Folder structure, `requirements.txt`, `TASKS.md`, `CLAUDE.md`, `.gitignore`, and a
 smoke test that loads the Presidio engine + `en_core_web_lg` and detects real PII.
 - **Success check:** `python -m src.smoke` prints a real `EMAIL_ADDRESS` and `PERSON`
   detection (requires the model download to have been run once).
 
-## [ ] Task 2 — File extraction (`src/extract.py`)
+## [x] Task 2 — File extraction (`src/extract.py`)
 PDF (pdfplumber), Word (python-docx), Excel (openpyxl) → clean text, preserving
 line/cell boundaries so detection can run per line.
 - **Success check:** extract each of the 3 sample formats and print line-preserved text.
 
-## [ ] Task 3 — Custom recognizers (`src/recognizers/`)
+## [x] Task 3 — Custom recognizers (`src/recognizers/`)
 SSN, EIN, ABA routing (+checksum), credit card & IBAN (reuse Presidio), federal
 CM-ECF docket, NY attorney registration (bar) number. Deterministic + high score.
 - **Success check:** `pytest tests/test_recognizers.py` — valid numbers detected,
