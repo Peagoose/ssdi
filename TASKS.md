@@ -47,7 +47,7 @@ tight contiguous-run matching within one (block,line), font-fit placeholders.
 - **Success check:** redacted PDF has original values truly removed (text search finds
   none) and placeholders land on the correct cells.
 
-## [ ] Task 8 — Streamlit UI (`src/app.py`)
+## [x] Task 8 — Streamlit UI (`src/app.py`)
 Upload, color-coded highlight view, toggle to anonymized, click-to-reveal, per-type
 count summary, download buttons up top, calm custom CSS.
 - **Success check:** `streamlit run src/app.py`, upload a sample, see highlights +
