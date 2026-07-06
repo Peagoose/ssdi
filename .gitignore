@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Virtual environment
+venv/
+.venv/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# spaCy models are installed via `python -m spacy download`, never committed
+en_core_web_*/
+
+# NEVER commit real PII. Synthetic test files are committed explicitly;
+# anything ending in .real.* is treated as sensitive and ignored.
+test_files/*.real.*
+*.real.pdf
+*.real.docx
+*.real.xlsx
+
+# OS noise
+.DS_Store
+Thumbs.db

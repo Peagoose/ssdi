@@ -1,0 +1,31 @@
+# Legal PII Anonymizer — Python dependencies
+# Install (Windows PowerShell), after activating the venv:
+#     pip install -r requirements.txt
+# Then download the English NER model ONCE (not a pip package):
+#     python -m spacy download en_core_web_lg
+
+# --- PII engine (Microsoft Presidio) ---
+presidio-analyzer>=2.2.360
+presidio-anonymizer>=2.2.360
+presidio-structured>=0.0.4
+
+# --- English NER backend ---
+spacy>=3.7,<4.0
+# NOTE: the model itself is installed separately with:
+#   python -m spacy download en_core_web_lg
+
+# --- File extraction ---
+pdfplumber>=0.11.0     # PDF text
+python-docx>=1.1.0     # Word (.docx)
+openpyxl>=3.1.0        # Excel (.xlsx)
+
+# --- In-place PDF redaction ---
+PyMuPDF>=1.24.0        # imported as 'fitz'
+
+# --- UI ---
+streamlit>=1.36.0
+st-annotated-text>=4.0.1
+
+# --- Utilities / test-file generation ---
+pandas>=2.2.0
+reportlab>=4.1.0       # generate synthetic test PDFs
