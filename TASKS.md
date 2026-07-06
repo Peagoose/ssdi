@@ -41,7 +41,7 @@ Configurable: SSN→last4, financial accounts→last4, minors→initials, DOB→
 addresses→redact. Settings toggles.
 - **Success check:** toggling policy changes output as specified; default = FRCP.
 
-## [ ] Task 7 — File output + PDF redaction
+## [x] Task 7 — File output + PDF redaction
 `src/anonymize_files.py` (docx/xlsx) and `src/redact_pdf.py` — in-place redaction,
 tight contiguous-run matching within one (block,line), font-fit placeholders.
 - **Success check:** redacted PDF has original values truly removed (text search finds
