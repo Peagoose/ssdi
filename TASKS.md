@@ -53,7 +53,7 @@ count summary, download buttons up top, calm custom CSS.
 - **Success check:** `streamlit run src/app.py`, upload a sample, see highlights +
   anonymized view + counts + downloads.
 
-## [ ] Task 9 — Recall measurement + test set
+## [x] Task 9 — Recall measurement + test set
 Generate labeled synthetic test set incl. a **table-heavy** document; measure
 recall/precision per entity type; write to `results/`.
 - **Success check:** `python -m src.measure` writes a per-type recall report.
@@ -71,8 +71,17 @@ recall/precision per entity type; write to `results/`.
   Synthetic test data (Task 9) MUST use realistic non-sequential numbers like
   `536-90-4788`.
 - **`EmailRecognizer` attempts a network call** to publicsuffix.org (falls back to a
-  bundled snapshot). Task 4 must force tldextract offline so the tool is truly offline
+  bundled snapshot). Task 4 forces tldextract offline so the tool is truly offline
   and produces no console noise.
+- **Per-line context trade-off (tables):** running NER per line/cell restores table
+  recall, but a value's context word can sit in a *different* cell (e.g. a "DOB"
+  header above the date). So context-dependent labels (US_DOB, bare-9-digit SSN vs
+  routing) may fall back to a generic type in tables — the value is still detected and
+  redacted, just not always with the most specific label. Dashed/validated numbers are
+  unaffected (they score 1.0 without context). Documented, accepted for the spike.
+- **All labeled test values pass their real checksums**, and the deterministic
+  recognizers detect every SSN/routing number in the table-heavy workbook cell-by-cell
+  with no NER — confirming the table path.
 
 ### Environment notes
 - Dev happens in a Linux cloud container (code + unit tests). The spaCy model
