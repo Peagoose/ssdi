@@ -36,7 +36,7 @@ Typed reversible placeholders `[NAME_1]`; same surface value → same placeholde
 numbers assigned in reading order; CSV re-identification key.
 - **Success check:** repeated value gets one placeholder; key round-trips to original.
 
-## [ ] Task 6 — Legal redaction policy (FRCP 5.2)
+## [x] Task 6 — Legal redaction policy (FRCP 5.2)
 Configurable: SSN→last4, financial accounts→last4, minors→initials, DOB→year,
 addresses→redact. Settings toggles.
 - **Success check:** toggling policy changes output as specified; default = FRCP.

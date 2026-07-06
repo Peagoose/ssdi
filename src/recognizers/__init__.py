@@ -14,6 +14,7 @@ from presidio_analyzer import EntityRecognizer
 
 from .bar_number import BAR_ENTITY, NyBarNumberRecognizer
 from .card import CARD_ENTITY, build_card_recognizer
+from .dob import DOB_ENTITY, DobRecognizer
 from .docket import DOCKET_ENTITY, DocketRecognizer
 from .ein import EIN_ENTITY, EinRecognizer
 from .iban import IBAN_ENTITY, build_iban_recognizer
@@ -29,6 +30,7 @@ def custom_recognizers() -> list[EntityRecognizer]:
         RoutingNumberRecognizer(),
         DocketRecognizer(),
         NyBarNumberRecognizer(),
+        DobRecognizer(),
     ]
 
 
@@ -49,6 +51,7 @@ DETERMINISTIC_ENTITIES = frozenset(
         ROUTING_ENTITY,
         DOCKET_ENTITY,
         BAR_ENTITY,
+        DOB_ENTITY,
         CARD_ENTITY,
         IBAN_ENTITY,
         # Presidio predefined deterministic types we also treat as authoritative:
@@ -73,6 +76,7 @@ __all__ = [
     "ROUTING_ENTITY",
     "DOCKET_ENTITY",
     "BAR_ENTITY",
+    "DOB_ENTITY",
     "CARD_ENTITY",
     "IBAN_ENTITY",
 ]

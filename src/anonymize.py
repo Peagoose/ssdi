@@ -89,36 +89,44 @@ def anonymize(
     text: str,
     entities: list[Entity],
     prefix_overrides: dict[str, str] | None = None,
+    policy=None,
 ) -> Anonymization:
     """Replace entity spans in `text` with typed, deduplicated placeholders.
 
     `entities` must carry offsets into `text` (as produced by analyze_document).
     Overlapping entities should already be resolved upstream; if any remain, the
     earlier-starting one is applied and later overlaps are skipped.
+
+    If `policy` (a RedactionPolicy) is given, governed types render a legal-style
+    partial mask (e.g. SSN -> "XXX-XX-4788") instead of a generic placeholder.
+    Every distinct original still gets its own key row, so redaction stays
+    reversible via the CSV key.
     """
     ordered = sorted(entities, key=lambda e: (e.start, e.end))
 
-    mapping: dict[tuple[str, str], str] = {}       # (type, value) -> placeholder
+    mapping: dict[tuple[str, str], str] = {}       # (type, value) -> token
     counters: dict[str, int] = {}                  # prefix -> next number
-    key_rows: dict[str, KeyRow] = {}               # placeholder -> KeyRow
+    key_rows: dict[tuple[str, str], KeyRow] = {}   # (type, value) -> KeyRow
     replacements: list[Replacement] = []
 
     for entity in ordered:
         value = entity.text
         map_key = (entity.entity_type, value)
         if map_key not in mapping:
-            prefix = prefix_for(entity.entity_type, prefix_overrides)
-            counters[prefix] = counters.get(prefix, 0) + 1
-            placeholder = f"[{prefix}_{counters[prefix]}]"
-            mapping[map_key] = placeholder
-            key_rows[placeholder] = KeyRow(
-                placeholder=placeholder,
+            token = policy.render(entity.entity_type, value) if policy else None
+            if token is None:
+                prefix = prefix_for(entity.entity_type, prefix_overrides)
+                counters[prefix] = counters.get(prefix, 0) + 1
+                token = f"[{prefix}_{counters[prefix]}]"
+            mapping[map_key] = token
+            key_rows[map_key] = KeyRow(
+                placeholder=token,
                 entity_type=entity.entity_type,
                 original=value,
             )
-        placeholder = mapping[map_key]
-        key_rows[placeholder].occurrences += 1
-        replacements.append(Replacement(entity=entity, placeholder=placeholder))
+        token = mapping[map_key]
+        key_rows[map_key].occurrences += 1
+        replacements.append(Replacement(entity=entity, placeholder=token))
 
     # Apply replacements right-to-left so earlier offsets stay valid. Skip any
     # leftover overlap defensively.
@@ -131,7 +139,7 @@ def anonymize(
         out = out[: e.start] + rep.placeholder + out[e.end :]
         last_start = e.start
 
-    # Key rows ordered by placeholder assignment (reading order).
+    # Key rows in first-occurrence (reading) order.
     key = list(key_rows.values())
     return Anonymization(text=out, replacements=replacements, key=key)
 
