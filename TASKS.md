@@ -25,7 +25,7 @@ CM-ECF docket, NY attorney registration (bar) number. Deterministic + high score
 - **Success check:** `pytest tests/test_recognizers.py` — valid numbers detected,
   invalid checksums rejected.
 
-## [ ] Task 4 — Analysis pipeline (`src/analyze.py`)
+## [x] Task 4 — Analysis pipeline (`src/analyze.py`)
 Presidio + spaCy, **per-line** NER, overlap resolution (deterministic beats NER),
 whitespace/punctuation span trimming.
 - **Success check:** a mixed line ("SSN 123-45-6789 for John Smith") yields SSN from
